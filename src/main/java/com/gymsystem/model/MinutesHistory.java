@@ -2,10 +2,7 @@ package com.gymsystem.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -16,8 +13,10 @@ import javax.persistence.Id;
 public class MinutesHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mh_id")
     int mh_id;
-
-    int user_id;
+    @Column(name = "user_id")
+    int userId;
+    @Column(name = "minutes")
     int minutes;
 }

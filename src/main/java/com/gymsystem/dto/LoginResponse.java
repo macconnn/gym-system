@@ -9,9 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangePwdReq {
-    String email;
-    String newPassword;
-    String nid;
+public class LoginResponse {
+    private String name;
+    private String email;
+    private String token;
 }
-

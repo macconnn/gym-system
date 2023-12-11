@@ -9,7 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddMinutesReq {
+public class SingUpRequest {
+    String email;
+    String password;
     String name;
-    int minutes;
+    String nid;
+    String role;
+    String birth;
+    String phone;
+    String address;
 }

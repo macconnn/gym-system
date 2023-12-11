@@ -17,12 +17,12 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UsersService usersService;
+    UserService userService;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Users users = usersService.readUserInfoByEmail(email);
+        Users users = userService.findAllByEmail(email);
         List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + users.getRole()));
         List<String> roles = new ArrayList<>();

@@ -1,20 +1,10 @@
 package com.gymsystem.service;
 
 import com.gymsystem.model.MinutesHistory;
-import com.gymsystem.repository.MinutesHistoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class MinutesHistoryService {
+import java.util.List;
 
-    @Autowired
-    MinutesHistoryRepository minutesHistoryRepository;
-
-    public void insertAddLicenseLog(MinutesHistory minutesHistory){
-        minutesHistoryRepository.save(minutesHistory);
-    }
-
-
-
+public interface MinutesHistoryService {
+    void insertAddMinutesLog(MinutesHistory minutesHistory);
+    List<MinutesHistory> findAllByUserId(int userId);
 }

@@ -3,6 +3,7 @@ package com.gymsystem.security;
 import com.gymsystem.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,9 +37,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/error").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/users/login").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/users/changePassword").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/users/minutes").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/users/{name}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.GET, "/api/users/{name}/history").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

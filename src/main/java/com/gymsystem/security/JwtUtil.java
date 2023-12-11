@@ -1,9 +1,7 @@
 package com.gymsystem.security;
 
-import com.gymsystem.dto.LoginReq;
-import com.gymsystem.service.UsersService;
+import com.gymsystem.dto.LoginRequest;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtUtil {
-    @Autowired
-    UsersService usersService;
     private final String secret_key = "adagasrfgczchbsdfgWEASDSasLKNAIWOUENasdasdgaktjhkdgdfF";
     private final long accessTokenValidityWithMinute = 30;
     private final JwtParser jwtParser;
@@ -26,8 +22,8 @@ public class JwtUtil {
         this.jwtParser = Jwts.parser().setSigningKey(secret_key);
     }
 
-    public String createToken(LoginReq loginReq) {
-        Claims claims = Jwts.claims().setSubject(loginReq.getEmail());
+    public String createToken(LoginRequest loginRequest) {
+        Claims claims = Jwts.claims().setSubject(loginRequest.getEmail());
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidityWithMinute));
         return Jwts.builder()
@@ -78,9 +74,9 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-    private List<String> getRoles(Claims claims) {
-        return (List<String>) claims.get("roles");
-    }
+//    public List<String> getRoles(Claims claims) {
+//        return (List<String>) claims.get("roles");
+//    }
 
 
 }

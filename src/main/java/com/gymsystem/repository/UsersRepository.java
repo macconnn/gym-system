@@ -9,6 +9,7 @@ import java.util.List;
 public interface UsersRepository extends CrudRepository<Users, Long> {
     Users findAllByEmail(String email);
     Users findAllByEmailAndNid(String email, String nid);
+    Users findAllByName(String name);
     List<Users> findAll();
     @Query(value = "SELECT u.role FROM users u WHERE u.email = :email")
     String findRoleByEmail(String email);
@@ -18,4 +19,6 @@ public interface UsersRepository extends CrudRepository<Users, Long> {
     String findEmailByEmail(String email);
     @Query(value = "SELECT u.user_id FROM users u WHERE u.name = :name")
     Integer findUseridByName(String name);
+    @Query(value = "SELECT u.name FROM users u WHERE u.email = :email")
+    String findNameByEmail(String email);
 }

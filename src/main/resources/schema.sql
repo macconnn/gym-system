@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `address` varchar(255) NOT NULL,
     PRIMARY KEY (`user_id`),
     INDEX idx_name_email (name, email),
+    UNIQUE(`email`),
     UNIQUE(`nid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
