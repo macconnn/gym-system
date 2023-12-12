@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddMinutesRequest {
+public class MinutesActRequest {
     String name;
     int minutes;
 }

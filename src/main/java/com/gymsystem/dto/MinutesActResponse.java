@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddMinutesResponse {
+public class MinutesActResponse {
     String message;
     int minutes;
 }

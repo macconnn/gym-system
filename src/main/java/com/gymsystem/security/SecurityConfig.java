@@ -36,16 +36,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/error").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/users/login").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/users/changePassword").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/users/minutes").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/users/{name}").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.GET, "/api/users/{name}/history").hasAnyRole("ADMIN", "USER")
-                .anyRequest().authenticated()
+                    .authorizeRequests()
+                    .antMatchers("/error").permitAll()
+                    .antMatchers(HttpMethod.GET, "/api/users/login").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+                    .antMatchers(HttpMethod.GET,"/api/users/home").permitAll()
+                    .antMatchers(HttpMethod.PUT, "/api/users/changePassword").permitAll()
+                    .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/api/users/minutes").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/api/users/{name}").permitAll() // for test html remove latter
+    //                .antMatchers(HttpMethod.GET, "/api/users/{name}").hasAnyRole("ADMIN", "USER")
+                    .antMatchers(HttpMethod.GET, "/api/users/{name}/history").hasAnyRole("ADMIN", "USER")
+                    .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 

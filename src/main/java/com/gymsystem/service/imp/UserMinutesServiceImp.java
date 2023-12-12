@@ -24,7 +24,7 @@ public class UserMinutesServiceImp implements UserMinutesService {
     public UserMinutes updateUserMinutes(UserMinutes userMinutesInput) {
         UserMinutes userMinutes = userMinutesRepository.findAllByUserId(userMinutesInput.getUserId());
         if(userMinutes == null){
-            userMinutesRepository.save(userMinutesInput);  // first add
+            userMinutesRepository.save(userMinutesInput);  // first time add minutes
         }else{
             userMinutes.setMinutes(userMinutes.getMinutes() + userMinutesInput.getMinutes());
             userMinutesRepository.save(userMinutes);

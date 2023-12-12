@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Page</title>
+  <!-- 引入jQuery库 -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+<h1>Main Page</h1>
+
+<!-- 显示Name标签 -->
+<p>Name: <span th:text="${loginResponse.name}"></span></p>
+
+<!-- 显示Email标签 -->
+<p>Email: <span th:text="${loginResponse.email}"></span></p>
+
+<!-- 显示Token标签 -->
+<p>Token: <span th:text="${loginResponse.token}"></span></p>
+
+<!-- 登出按钮 -->
+<button id="logoutBtn">Logout</button>
+
+<!-- JavaScript代码 -->
+<script>
+  $(document).ready(function() {
+    // 绑定点击事件
+    $("#logoutBtn").click(function() {
+      // 发送POST请求到登出API
+      $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:8080/api/users/logout",
+        success: function(response) {
+          // 处理成功响应，例如重定向到登录页面
+          window.location.href = "/login";
+        },
+        error: function(error) {
+          // 处理错误，例如显示错误消息
+          console.error("Logout failed:", error);
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

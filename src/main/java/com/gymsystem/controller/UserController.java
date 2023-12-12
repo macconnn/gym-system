@@ -17,12 +17,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class UserController {
 
@@ -39,8 +41,16 @@ public class UserController {
     @Autowired
     PasswordUtil passwordUtil;
 
-    @RequestMapping(value = "/users/login", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody LoginRequest loginRequest) {
+    @RequestMapping(value = "/users/login", method = RequestMethod.GET)
+    public ModelAndView getLoginPage(){
+        return new ModelAndView("login", HttpStatus.OK);
+    }
+    @RequestMapping(value = "/users/logout", method = RequestMethod.GET)
+    public String getLogoutPage(){
+        return "login";
+    }
+    @RequestMapping(value = "/users/login", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity postLogin(@RequestBody LoginRequest loginRequest) {
         String bCryptCheck = passwordUtil.validPassword(loginRequest);
 
         if(bCryptCheck == null){
@@ -57,8 +67,7 @@ public class UserController {
             String name = userService.findNameByEmail(email);
             String token = jwtUtil.createToken(loginRequest);
             LoginResponse loginResponse = new LoginResponse(name, email, token);
-
-            return ResponseEntity.ok(loginResponse);
+            return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
 
         } catch (BadCredentialsException e) {
             e.printStackTrace();
@@ -134,11 +143,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/minutes", method = RequestMethod.POST)
-    public ResponseEntity addLicense(@RequestBody AddMinutesRequest addMinutesRequest){
+    public ResponseEntity addMinutes(@RequestBody MinutesActRequest minutesActRequest){
         UserMinutes userMinutesInput = new UserMinutes();
         UserMinutes userMinutes = null;
-        AddMinutesResponse addMinutesResponse = new AddMinutesResponse();
-        Integer user_id = userService.findUseridByName(addMinutesRequest.getName());
+        MinutesActResponse minutesActResponse = new MinutesActResponse();
+        Integer user_id = userService.findUseridByName(minutesActRequest.getName());
 
         if(user_id == null){
             ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Select name not exists");
@@ -148,16 +157,43 @@ public class UserController {
         try {
             // update user minutes
             userMinutesInput.setUserId(user_id);
-            userMinutesInput.setMinutes(addMinutesRequest.getMinutes());
+            userMinutesInput.setMinutes(minutesActRequest.getMinutes());
             userMinutes = userMinutesService.updateUserMinutes(userMinutesInput);
-            addMinutesResponse.setMessage("Add minutes OK");
-            addMinutesResponse.setMinutes(userMinutes.getMinutes());
+            minutesActResponse.setMessage("Update minutes OK");
+            minutesActResponse.setMinutes(userMinutes.getMinutes());
         }catch (Exception e){
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Add user minutes failed");
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Update user minutes failed");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(addMinutesResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(minutesActResponse);
+    }
+
+    @RequestMapping(value = "/users/minutes", method = RequestMethod.DELETE)
+    public ResponseEntity reduceMinutes(@RequestBody MinutesActRequest minutesActRequest){
+        UserMinutes userMinutesInput = new UserMinutes();
+        UserMinutes userMinutes = null;
+        MinutesActResponse minutesActResponse = new MinutesActResponse();
+        Integer user_id = userService.findUseridByName(minutesActRequest.getName());
+
+        if(user_id == null){
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Select name not exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
+        try {
+            // update user minutes
+            userMinutesInput.setUserId(user_id);
+            userMinutesInput.setMinutes(-minutesActRequest.getMinutes());
+            userMinutes = userMinutesService.updateUserMinutes(userMinutesInput);
+            minutesActResponse.setMessage("Update minutes OK");
+            minutesActResponse.setMinutes(userMinutes.getMinutes());
+        }catch (Exception e){
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Update user minutes failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(minutesActResponse);
     }
 
 }
