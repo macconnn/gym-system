@@ -1,8 +1,10 @@
 package com.gymsystem.model;
 
 import lombok.*;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -10,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Entity(name = "users")
-public class Users {
+public class Users implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int user_id;

@@ -1,0 +1,45 @@
+2023-12-13 16:58:34 INFO  com.gymsystem.GymSystemApplication - Starting GymSystemApplication using Java 1.8.0_372 on localhost.localdomain with PID 82868 (/home/eden/Desktop/git/gym-system/target/classes started by eden in /home/eden/Desktop/git/gym-system)
+2023-12-13 16:58:34 INFO  com.gymsystem.GymSystemApplication - No active profile set, falling back to 1 default profile: "default"
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 3 JPA repository interfaces.
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.gymsystem.repository.MinutesHistoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.gymsystem.repository.UserMinutesRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.gymsystem.repository.UsersRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-12-13 16:58:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2023-12-13 16:58:36 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8085 (http)
+2023-12-13 16:58:36 INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.35] using APR version [1.6.3].
+2023-12-13 16:58:36 INFO  o.a.c.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-12-13 16:58:36 INFO  o.a.c.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-12-13 16:58:36 INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1k  FIPS 25 Mar 2021]
+2023-12-13 16:58:36 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8085"]
+2023-12-13 16:58:36 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-13 16:58:36 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-12-13 16:58:36 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-13 16:58:36 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1497 ms
+2023-12-13 16:58:36 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-12-13 16:58:37 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-12-13 16:58:37 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-13 16:58:37 INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-12-13 16:58:37 INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-12-13 16:58:37 INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-12-13 16:58:38 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-12-13 16:58:38 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/error']
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/login', GET]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/login', POST]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/home', GET]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/changePassword', PUT]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [hasRole('ROLE_ADMIN')] for Ant [pattern='/api/users', GET]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [hasRole('ROLE_ADMIN')] for Ant [pattern='/api/users', POST]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [hasRole('ROLE_ADMIN')] for Ant [pattern='/api/users/minutes', POST]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [permitAll] for Ant [pattern='/api/users/{name}', GET]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [hasAnyRole('ROLE_ADMIN','ROLE_USER')] for Ant [pattern='/api/users/{name}/history', GET]
+2023-12-13 16:58:38 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource - Adding web access control expression [authenticated] for any request
+2023-12-13 16:58:38 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4b8a0d03, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@54f373d4, org.springframework.security.web.context.SecurityContextPersistenceFilter@e8c84eb, org.springframework.security.web.header.HeaderWriterFilter@e7e455d, org.springframework.security.web.authentication.logout.LogoutFilter@795faad, com.gymsystem.security.JwtAuthorizationFilter@14dbfdb1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@283bb8b7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4fa8297b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1c53bd49, org.springframework.security.web.session.SessionManagementFilter@151659dd, org.springframework.security.web.access.ExceptionTranslationFilter@6fe5da76, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@8ee03f5]
+2023-12-13 16:58:38 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-13 16:58:39 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8085"]
+2023-12-13 16:58:39 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8085 (http) with context path ''
+2023-12-13 16:58:39 INFO  com.gymsystem.GymSystemApplication - Started GymSystemApplication in 5.653 seconds (JVM running for 6.912)

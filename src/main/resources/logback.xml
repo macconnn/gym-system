@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <property name="Charset" value="UTF-8" />
+    <property name="FileName" value="Log" />
+    <property name="LogsLocation" value="logs" />
+    <property name="Format1" value="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n" />
+    <!-- appender -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${Format1}</pattern>
+            <charset>${Charset}</charset>
+        </encoder>
+    </appender>
+    <appender name="fileout" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LogsLocation}/${FileName}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>256MB</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${Format1}</pattern>
+            <charset>${Charset}</charset>
+        </encoder>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>100MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+    <!-- logger -->
+    <root level="info">
+        <appender-ref ref="fileout" />
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>

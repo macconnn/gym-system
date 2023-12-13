@@ -1,5 +1,6 @@
 package com.gymsystem.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gymsystem.dto.*;
 import com.gymsystem.model.MinutesHistory;
 import com.gymsystem.model.UserMinutes;
@@ -11,6 +12,9 @@ import com.gymsystem.service.UserMinutesService;
 import com.gymsystem.service.UserService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/api")
@@ -36,10 +41,13 @@ public class UserController {
     UserMinutesService userMinutesService;
     @Autowired
     AuthenticationManager authenticationManager;
+    @Autowired(required = false)
+    RedisTemplate redisTemplate;
     @Autowired
     JwtUtil jwtUtil;
     @Autowired
     PasswordUtil passwordUtil;
+    private final long CACHE_KEY_TIMEOUT = 60;
 
     @RequestMapping(value = "/users/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(){
@@ -114,7 +122,13 @@ public class UserController {
     public ResponseEntity userInfoByName(HttpServletRequest request, @PathVariable String name){
         Claims claims = jwtUtil.resolveClaims(request);
         String email = jwtUtil.getEmail(claims);
-        Users users = userService.findAllByEmail(email);
+        Users users = (Users) redisTemplate.opsForValue().get("users_" + email);
+
+        // write users to redis
+        if(users == null){
+            users = userService.findAllByEmail(email);
+            redisTemplate.opsForValue().set("users_" + email, users, CACHE_KEY_TIMEOUT, TimeUnit.SECONDS);
+        }
 
         if(users.getName().equals(name)){
             return ResponseEntity.status(HttpStatus.OK).body(users);
@@ -131,7 +145,14 @@ public class UserController {
     public ResponseEntity userHistory(HttpServletRequest request, @PathVariable String name){
         Claims claims = jwtUtil.resolveClaims(request);
         String email = jwtUtil.getEmail(claims);
-        String nameFromEmail = userService.findNameByEmail(email);
+        String nameFromEmail = (String) redisTemplate.opsForValue().get("email_" + email);
+
+        // write users to redis
+        if(nameFromEmail == null){
+            nameFromEmail = userService.findNameByEmail(email);
+            redisTemplate.opsForValue().set("email_" + email, nameFromEmail, CACHE_KEY_TIMEOUT, TimeUnit.SECONDS);
+        }
+
         if(nameFromEmail.equals(name) || nameFromEmail.equals("Admin")){
             Integer userId = userService.findUseridByName(name);
             List<MinutesHistory> minutesHistories = minutesHistoryService.findAllByUserId(userId);
